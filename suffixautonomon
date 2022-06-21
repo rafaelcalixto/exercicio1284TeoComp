@@ -1,0 +1,9 @@
+palavras = {
+    "a": ["hello", "hell", "heaven", "goodbye"],
+    "b": ["hi", "he", "h"],
+    "c": ["structure", "structures", "ride", "riders", "stress", "solstice", "ridiculous"]
+}
+
+def SuffixAutomaton(Q, q0, F, delta):
+    F.append(q0)
+    
