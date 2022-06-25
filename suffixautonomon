@@ -1,9 +1,22 @@
-palavras = {
-    "a": ["hello", "hell", "heaven", "goodbye"],
-    "b": ["hi", "he", "h"],
-    "c": ["structure", "structures", "ride", "riders", "stress", "solstice", "ridiculous"]
-}
+class state():
+    def __init__():
+        len = int
+        link = int
+        next = {}
+    
+    
+MAXLEN = 100000
+sz = int
+last = int
+st = [state()] * (MAXLEN * 2)
 
-def SuffixAutomaton(Q, q0, F, delta):
-    F.append(q0)
+def sa_init():
+    st[0].len = 0
+    st[0].link = -1
+    sz += 1
+    last = 0
+    
+def sa_extend(c):
+    cur = sz + 1
+    st[cur].len = 
     
