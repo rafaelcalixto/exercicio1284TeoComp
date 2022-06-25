@@ -18,5 +18,26 @@ def sa_init():
     
 def sa_extend(c):
     cur = sz + 1
-    st[cur].len = 
+    st[cur].len = st[last].len + 1
+    p = last
+    while p != -1 and not list(st[p].next.keys()).count(c):
+        st[p].next[c] = cur
+        p = st[p].link
+    if p == -1:
+        st[cur].link = 0
+    else:
+        q = st[p].next[c]
+        if st[p].len + 1 == st[q].len:
+            st[cur].link = q
+        else:
+            clone = sz + 1
+            st[clone].len = st[p].len + 1
+            st[clone].next = st[q].next
+            st[clone].link = st[q].link
+            while p != -1 and st[p].next[c] == q:
+                st[p].next[c] = clone
+                p = st[p].link
+            st[q].link = st[cur].link = clone
+    last = cur
+    
     
