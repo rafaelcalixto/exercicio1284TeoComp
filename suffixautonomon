@@ -5,62 +5,60 @@ class state:
         self.len = int
         self.link = int
         self.next = {}
-
-# lcs
-S = "gli"
-T = "aeroglifu"
-
-# Criando um array de nós
-st = [copy.deepcopy(state()) for step in range(200000)]
-# inicializando nó zero
-st[0].len = 0
-st[0].link = -1
-
-sz = 1
-last = 0
-
-for i in range(len(S)):
-    # sa_extend
-    c = S[i]
-    cur = sz + 1
-    st[cur].len = st[last].len + 1
-    p = last
-    while p != -1 and not list(st[p].next.keys()).count(c):
-        st[p].next[c] = cur
-        p = st[p].link
-    if p == -1:
-        st[cur].link = 0
-    else:
-        q = st[p].next[c]
-        if st[p].len + 1 == st[q].len:
-            st[cur].link = q
-        else:
-            clone = sz + 1
-            st[clone].len = st[p].len + 1
-            st[clone].next = st[q].next
-            st[clone].link = st[q].link
-            while p != -1 and st[p].next[c] == q:
-                st[p].next[c] = clone
-                p = st[p].link
-            st[q].link = st[cur].link = clone
-    last = cur
+        
+def checksubstr(S, T):
+    # Criando um array de nós
+    st = [copy.deepcopy(state()) for step in range(10)]
+    # inicializando nó zero
+    st[0].len = 0
+    st[0].link = -1
     
-v = 0
-l = 0
-best = 0
-bestpos = 0
+    sz = 1
+    last = 0
+    
+    for i in range(len(S)):
+        # sa_extend
+        c = S[i]
+        cur = sz + 1
+        st[cur].len = st[last].len + 1
+        p = last
+        while p != -1 and not list(st[p].next.keys()).count(c):
+            st[p].next[c] = cur
+            p = st[p].link
+        if p == -1:
+            st[cur].link = 0
+        else:
+            q = st[p].next[c]
+            if st[p].len + 1 == st[q].len:
+                st[cur].link = q
+            else:
+                clone = sz + 1
+                st[clone].len = st[p].len + 1
+                st[clone].next = st[q].next
+                st[clone].link = st[q].link
+                while p != -1 and st[p].next[c] == q:
+                    st[p].next[c] = clone
+                    p = st[p].link
+                st[q].link = st[cur].link = clone
+        last = cur
+        
+    v = 0
+    l = 0
+    best = 0
+    bestpos = 0
+    
+    for i in range(len(T)):
+        while v and not list(st[v].next.keys()).count(T[i]):
+            v = st[v].link
+            l = st[v].len
+        if list(st[v].next.keys()).count(T[i]):
+            v = st[v].next[T[i]]
+            l += 1
+        if l > best:
+            best = l
+            bestpos = i
+            
+    return T[bestpos - best + 1: best]
 
-for i in range(len(T)):
-    while v and not list(st[v].next.keys()).count(T[i]):
-        print(v)
-        print(l)
-        v = st[v].link
-        l = st[v].len
-    if list(st[v].next.keys()).count(T[i]):
-        v = st[v].next[T[i]]
-        l += 1
-    if l > best:
-        best = 1
-        bestpos = 1
+print(checksubstr("aero", "aeroglifu"))
 
-print("".join(list(st[0].next.keys())))
