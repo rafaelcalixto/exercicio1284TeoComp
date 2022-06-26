@@ -1,5 +1,11 @@
 import copy
 
+dicios = {
+    "a": ["hello", "hell", "heaven", "goodbye"],
+    "b": ["hi", "he", "h"],
+    "c": ["structure", "structures", "ride", "riders", "stress", "solstice", "ridiculous"]
+}
+
 class state:
     def __init__(self):
         self.len = int
@@ -60,5 +66,11 @@ def checksubstr(S, T):
             
     return T[bestpos - best + 1: best]
 
-print(checksubstr("aero", "aeroglifu"))
+digit = input("escreva:")
+
+for s, p in enumerate(dicios["a"]):
+    check = checksubstr(digit, p)
+    if len(check):
+        print(s)
+
 
