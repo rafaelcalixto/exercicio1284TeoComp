@@ -1,27 +1,35 @@
 class state:
-    def __init__():
-        len = int
-        link = int
-        next = {}
-
+    def __init__(self):
+        self.len = int
+        self.link = int
+        self.next = {}
+        
 MAXLEN = 100000
-sz = int
+sz = 0
 last = int
 st = [state()] * (MAXLEN * 2)
 
-def sa_init():
-    st[0].len = 0
-    st[0].link = -1
-    sz += 1
-    last = 0
-    
-def sa_extend(c):
+# lcs
+S = "test"
+T = "testando"
+
+st[0].len = 0
+st[0].link = -1
+sz += 1
+last = 0
+
+for i in range(len(S)):
+    print(i)
+    # sa_extend
+    c = S[i]
     cur = sz + 1
     st[cur].len = st[last].len + 1
     p = last
     while p != -1 and not list(st[p].next.keys()).count(c):
         st[p].next[c] = cur
         p = st[p].link
+        print(st[p].next)
+        print(p)
     if p == -1:
         st[cur].link = 0
     else:
@@ -39,28 +47,21 @@ def sa_extend(c):
             st[q].link = st[cur].link = clone
     last = cur
     
-def lcs(S, T):
-    sa_init()
-    for i in range(len(S)):
-        sa_extend(S[i])
-        
-    v = 0
-    l = 0
-    best = 0
-    bestpos = 0
-    
-    for i in range(len(T)):
-        while v and not list(st[v].next.keys()).count(T[i]):
-            v = st[v].link
-            l = st[v].length
-        if list(st[v].next.keys()).count(T[i]):
-            v = st[v].next[T[i]]
-            l = l + 1
-        if l > best:
-            best = 1
-            bestpos = 1
-    return T[bestpos - best + 1: best]
-    
-r = lcs("test", "testando")
+v = 0
+l = 0
+best = 0
+bestpos = 0
 
+for i in range(len(T)):
+    while v and not list(st[v].next.keys()).count(T[i]):
+        v = st[v].link
+        l = st[v].length
+    if list(st[v].next.keys()).count(T[i]):
+        v = st[v].next[T[i]]
+        l = l + 1
+    if l > best:
+        best = 1
+        bestpos = 1
+r = T[bestpos - best + 1: best]
+    
 print(r)
