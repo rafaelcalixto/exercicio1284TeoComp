@@ -65,12 +65,24 @@ def checksubstr(S, T):
             bestpos = i
             
     return T[bestpos - best + 1: best]
+    
+def autocomplete(w):
+    occurencies = []
+    for s, p in enumerate(dicios["c"]):
+        check = checksubstr(w, p)
+        if check == w:
+            occurencies.append(s)
+    return occurencies
 
 digit = input("escreva:")
+oc = autocomplete(digit)
 
-for s, p in enumerate(dicios["a"]):
-    check = checksubstr(digit, p)
-    if len(check):
-        print(s)
-
-
+if len(oc) > 1:
+    while True:
+        digit = dicios["a"][oc[0]][:len(digit)+1]
+        new_oc = autocomplete(digit)
+        if new_oc != oc or digit == dicios["a"][oc[0]]:
+            digit = digit[:-1]
+            break
+        
+print(digit)
