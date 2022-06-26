@@ -1,25 +1,25 @@
+import copy
+
 class state:
     def __init__(self):
         self.len = int
         self.link = int
         self.next = {}
-        
-MAXLEN = 100000
-sz = 0
-last = int
-st = [state()] * (MAXLEN * 2)
 
 # lcs
-S = "test"
-T = "testando"
+S = "gli"
+T = "aeroglifu"
 
+# Criando um array de nós
+st = [copy.deepcopy(state()) for step in range(200000)]
+# inicializando nó zero
 st[0].len = 0
 st[0].link = -1
-sz += 1
+
+sz = 1
 last = 0
 
 for i in range(len(S)):
-    print(i)
     # sa_extend
     c = S[i]
     cur = sz + 1
@@ -28,8 +28,6 @@ for i in range(len(S)):
     while p != -1 and not list(st[p].next.keys()).count(c):
         st[p].next[c] = cur
         p = st[p].link
-        print(st[p].next)
-        print(p)
     if p == -1:
         st[cur].link = 0
     else:
@@ -54,14 +52,15 @@ bestpos = 0
 
 for i in range(len(T)):
     while v and not list(st[v].next.keys()).count(T[i]):
+        print(v)
+        print(l)
         v = st[v].link
-        l = st[v].length
+        l = st[v].len
     if list(st[v].next.keys()).count(T[i]):
         v = st[v].next[T[i]]
-        l = l + 1
+        l += 1
     if l > best:
         best = 1
         bestpos = 1
-r = T[bestpos - best + 1: best]
-    
-print(r)
+
+print("".join(list(st[0].next.keys())))
